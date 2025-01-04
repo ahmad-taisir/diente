@@ -62,20 +62,18 @@ class _mainProfileState extends State<MainStudentProfile> {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout_outlined),
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacementNamed('/');
-
-           FirebaseAuth.instance.signOut();
-    },
-
+                FirebaseAuth.instance.signOut();
+              },
             ),
           ],
         ),
         body: FutureBuilder(
             future: fetchAllReports(FirebaseAuth.instance.currentUser!.uid),
             builder: (context, snapshot) {
-              Widget customDailog(BuildContext context,ReportModel report) {
+              Widget customDailog(BuildContext context, ReportModel report) {
                 return Center(
                   child: Container(
                     width: 332.w,
@@ -88,15 +86,16 @@ class _mainProfileState extends State<MainStudentProfile> {
                     ),
                     child: report.reportPic.isNotEmpty
                         ? Image.network(
-                      report.reportPic,
-                      fit: BoxFit.cover,
-                    )
+                            report.reportPic,
+                            fit: BoxFit.cover,
+                          )
                         : const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                            child: CircularProgressIndicator(),
+                          ),
                   ),
                 );
               }
+
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
@@ -104,26 +103,27 @@ class _mainProfileState extends State<MainStudentProfile> {
               return CustomScrollView(slivers: <Widget>[
                 SliverList(
                     delegate: SliverChildListDelegate([
-                      Center(
-                        child: StudentPicAndName(student: widget.stdModel,),
-                      ),
-
-                      Gap(28.h),
-                    ])),
+                  Center(
+                    child: StudentPicAndName(
+                      student: widget.stdModel,
+                    ),
+                  ),
+                  Gap(28.h),
+                ])),
                 SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
+                    (BuildContext context, int index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return customDailog(context,reports[index]);
+                                return customDailog(context, reports[index]);
                               });
                         },
-                        child:  Card(
+                        child: Card(
                             color: Theme.of(context).colorScheme.inverseSurface,
                             child: Center(
                               child: Text(
@@ -131,7 +131,8 @@ class _mainProfileState extends State<MainStudentProfile> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   "${aToE[reports[index].caseName]}"),
                             )),
@@ -140,7 +141,6 @@ class _mainProfileState extends State<MainStudentProfile> {
                     childCount: reports.length,
                   ),
                 ),
-
               ]);
             }));
   }

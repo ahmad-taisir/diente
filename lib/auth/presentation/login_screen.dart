@@ -190,6 +190,14 @@ class _bodyWidgetState extends State<bodyWidget> {
                   passwordVisible = !passwordVisible;
                 });
               },
+              onSubmitted: (value) {
+                BlocProvider.of<LoginBloc>(context).add(
+                  SubmitLogin(
+                    email: widget.emailController.text,
+                    password: widget.passwordController.text,
+                  ),
+                );
+              },
             ),
             SizedBox(height: 16.h),
             Gap(70.h),

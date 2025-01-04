@@ -121,6 +121,45 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     Gap(16.h),
                     CustomTextField(
+                      onSubmitted: (value) {
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            confirmPasswordController.text.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text('الرجاء ملء جميع الحقول'),
+                            backgroundColor: Colors.red,
+                          ));
+                        } else if (passwordController.text ==
+                            confirmPasswordController.text) {
+                          if (formKey.currentState!.validate()) {
+                            // Regular expression to check password strength
+                            RegExp regex = RegExp(
+                                r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@#$%^&+=]{8,}$');
+                            if (regex.hasMatch(passwordController.text)) {
+                              BlocProvider.of<SignupBloc>(context).add(
+                                SubmitSignup(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                    'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، حرف واحد ورقم واحد على الأقل'),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text('كلمات المرور غير متطابقة'),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
+                      },
                       width: 343.w,
                       height: 56.h,
                       controller: confirmPasswordController,
@@ -142,7 +181,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       context,
                       Theme.of(context).colorScheme.secondary,
                       () {
-                        if (passwordController.text ==
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            confirmPasswordController.text.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text('الرجاء ملء جميع الحقول'),
+                            backgroundColor: Colors.red,
+                          ));
+                        } else if (passwordController.text ==
                             confirmPasswordController.text) {
                           if (formKey.currentState!.validate()) {
                             // Regular expression to check password strength

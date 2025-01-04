@@ -152,8 +152,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
               if (FirebaseAuth.instance.currentUser != null) {
                 await FirebaseAuth.instance.signOut();
               }
-              // ignore: use_build_context_synchronously
-              Navigator.popAndPushNamed(context, '/login_screen');
+              Navigator.pushNamed(context, '/home_screen');
             },
           ),
           TextButton(

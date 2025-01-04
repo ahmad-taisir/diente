@@ -27,6 +27,7 @@ dependencies:
   # image_cropper_for_web: ^0.0.4
 
   firebase_core: any
+  shared_preferences: ^2.3.3
 dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:

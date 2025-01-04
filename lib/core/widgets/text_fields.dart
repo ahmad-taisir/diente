@@ -14,12 +14,14 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.hide,
     this.iconPressed,
+    this.onSubmitted,
   });
 
   String? Function(String? value)? validator;
   bool? hide;
   Function()? iconPressed;
   TextInputType? keyboardType;
+  void Function(String)? onSubmitted;
 
   final double width, height;
   final TextEditingController controller;
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: Center(
         child: TextFormField(
+          onFieldSubmitted: onSubmitted,
           obscureText: hide ?? false,
           cursorColor: Theme.of(context).colorScheme.inversePrimary,
           controller: controller,
