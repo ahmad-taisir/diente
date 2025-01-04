@@ -31,8 +31,21 @@ class CustomHeader extends StatelessWidget {
                     Center(
                       child: CircleAvatar(
                         radius: 20.r,
-                        backgroundImage: patientImage ??
-                            const AssetImage('assets/images/patient.png'),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: Text(
+                          patientName != null && patientName!.isNotEmpty
+                              ? patientName!
+                                  .split(' ')
+                                  .map((e) => e[0])
+                                  .take(2)
+                                  .join()
+                              : '',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(

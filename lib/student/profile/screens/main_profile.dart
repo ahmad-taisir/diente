@@ -100,6 +100,9 @@ class _mainProfileState extends State<MainStudentProfile> {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
               List<ReportModel> reports = snapshot.data ?? [];
+              if (reports.isEmpty) {
+                return const Center(child: Text('No reports available'));
+              }
               return CustomScrollView(slivers: <Widget>[
                 SliverList(
                     delegate: SliverChildListDelegate([

@@ -14,13 +14,11 @@ class ViewReports extends StatefulWidget {
 
   ViewReports({super.key, required this.stdModel});
 
-
   @override
   State<ViewReports> createState() => _ViewReportsState();
 }
 
 class _ViewReportsState extends State<ViewReports> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +33,7 @@ class _ViewReportsState extends State<ViewReports> {
         body: FutureBuilder(
             future: fetchAllReports(widget.stdModel.id),
             builder: (context, snapshot) {
-              Widget customDailog(BuildContext context,ReportModel report) {
+              Widget customDailog(BuildContext context, ReportModel report) {
                 return Center(
                   child: Container(
                     width: 332.w,
@@ -48,15 +46,16 @@ class _ViewReportsState extends State<ViewReports> {
                     ),
                     child: report.reportPic.isNotEmpty
                         ? Image.network(
-                      report.reportPic,
-                      fit: BoxFit.cover,
-                    )
+                            report.reportPic,
+                            fit: BoxFit.cover,
+                          )
                         : const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                            child: CircularProgressIndicator(),
+                          ),
                   ),
                 );
               }
+
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
@@ -65,44 +64,62 @@ class _ViewReportsState extends State<ViewReports> {
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Center(
-                    child: StudentPicAndName(student: widget.stdModel,),
+                    child: StudentPicAndName(
+                      student: widget.stdModel,
+                    ),
                   ),
-
                   Gap(28.h),
                 ])),
-                SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: (){
-                          showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return customDailog(context,reports[index]);
-                          });
-                        },
-                        child:  Card(
-                          color: Theme.of(context).colorScheme.inverseSurface,
-                          child: Center(
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              "${aToE[reports[index].caseName]}"),
-                        )),
-                      );
-                    },
-                    childCount: reports.length,
-                  ),
-                )
+                reports.isNotEmpty
+                    ? SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return customDailog(
+                                          context, reports[index]);
+                                    });
+                              },
+                              child: Card(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface,
+                                  child: Center(
+                                    child: Text(
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                        "${aToE[reports[index].caseName]}"),
+                                  )),
+                            );
+                          },
+                          childCount: reports.length,
+                        ),
+                      )
+                    : SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            'No reports available',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      )
               ]);
             }));
   }
-
-
 }

@@ -131,6 +131,16 @@ class _StudentLoginBodyWidgetState extends State<StudentLoginBodyWidget> {
               controller: widget.emailController,
               text: 'Enter your email',
               validator: validateField,
+              onSubmitted: (_) {
+                if (formKey.currentState!.validate()) {
+                  BlocProvider.of<StudentLoginBloc>(context).add(
+                    StudentSubmitLogin(
+                      email: widget.emailController.text,
+                      password: widget.passwordController.text,
+                    ),
+                  );
+                }
+              },
             ),
             SizedBox(height: 16.h),
             CustomTextField(
@@ -162,7 +172,7 @@ class _StudentLoginBodyWidgetState extends State<StudentLoginBodyWidget> {
                   );
                 }
               },
-              'Continue',
+              'Login',
               16.sp,
             ),
             Gap(36.h),

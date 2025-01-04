@@ -175,6 +175,21 @@ class _FillProfileScreenState extends State<FillProfileScreen> {
                       text: 'رقم الهاتف',
                       width: 343.w,
                       height: 56.h,
+                      onSubmitted: (_) {
+                        if (formKey.currentState!.validate()) {
+                          if (phoneNumberController.text.length != 10 ||
+                              phoneNumberController.text[0] != '0' ||
+                              phoneNumberController.text[1] != '7') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.red,
+                                content:
+                                    Text('Please enter a valid phone number'),
+                              ),
+                            );
+                          }
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -204,6 +219,17 @@ class _FillProfileScreenState extends State<FillProfileScreen> {
                         "https://firebasestorage.googleapis.com/v0/b/diente-e540a.appspot.com/o/profile_pic%2F909657-profile_pic.png?alt=media&token=927fbec3-22af-4cdc-84ec-3b0cd8038ca0";
                   }
                   if (formKey.currentState!.validate()) {
+                    if (phoneNumberController.text.length != 10 ||
+                        phoneNumberController.text[0] != '0' ||
+                        phoneNumberController.text[1] != '7') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Please enter a valid phone number'),
+                        ),
+                      );
+                      return;
+                    }
                     UserModel user = UserModel(
                       age: ageController.text,
                       email: userAuth!.email.toString(),

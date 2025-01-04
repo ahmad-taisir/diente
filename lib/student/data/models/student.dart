@@ -18,13 +18,13 @@ class StudentModel {
 
   factory StudentModel.fromJson(Map<String, dynamic> json) {
     return StudentModel(
-      name: json['name'],
-      id: json['id'],
-      year: json['year'],
-      email: json['email'],
-      profilePic: json['profilePic'],
-      phone: json['phone'],
-      cases: json['cases'],
+      name: json['name'] ?? 'TEST',
+      id: json['id'] ?? 'TEST',
+      year: json['year'] ?? 'TEST',
+      email: json['email'] ?? 'TEST',
+      profilePic: json['profilePic'] ?? 'TEST',
+      phone: json['phone'] ?? 'TEST',
+      cases: json['cases'] ?? 'TEST',
     );
   }
 }
